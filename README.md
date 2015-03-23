@@ -24,7 +24,57 @@ $ gem install ember-handlebars-template
 
 ## Usage
 
-TODO: Write usage instructions here
+``` ruby
+Sprockets.register_engine '.hbs', Ember::Handlebars::Template # or other extension which you like.
+```
+
+## Options
+
+You can overwrite config as the followings:
+
+``` ruby
+Ember::Handlebars::Template.configure do |config|
+  config.precompile = true
+
+  # You can overwrite other config
+end
+```
+
+### precompile
+
+Type: `Boolean`
+
+Enables or disables precompilation.(default: `true`)
+
+### ember_template
+
+Type: `String`
+
+Default which Ember template type to compile. `HTMLBars` / `Handlebars`. (default: `HTMLBars`)
+
+### output_type
+
+Type: `Symbol`
+
+Configures the style of output. `:global` / `:amd`. (default `:global`)
+
+### amd_namespace
+
+Type: `String`
+
+Configures the module prefix for AMD formatted output. (default: `nil`)
+
+### templates_root
+
+Type: `String`
+
+Sets the root path for templates to be looked up in. (default: `templates`)
+
+### templates_path_separator
+
+Type: `String`
+
+The path separator to use for templates. (default: `/`)
 
 ## Development
 
