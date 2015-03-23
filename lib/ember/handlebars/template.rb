@@ -92,7 +92,7 @@ module Ember
 
       def mustache_to_handlebars(scope, template)
         if scope.pathname.to_s =~ /\.mustache\.(handlebars|hjs|hbs)/
-          template.gsub(/\{\{(\w[^\}\}]+)\}\}/){ |x| "{{unbound #{$1}}}" }
+          template.gsub(/\{\{(\w[^\}]+)\}\}/){ |x| "{{unbound #{$1}}}" }
         else
           template
         end
