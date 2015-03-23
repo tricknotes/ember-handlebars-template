@@ -3,14 +3,21 @@ require 'barber'
 
 module Ember
   module Handlebars
-    class Template < Tilt::Template
-      autoload :VERSION, 'ember/handlebars/template/version'
+    autoload :VERSION, 'ember/handlebars/version'
+    autoload :Config, 'ember/handlebars/config'
 
+    class Template < Tilt::Template
       class << self
-        attr_accessor :configuration
+        def configure
+          yield config
+        end
 
         def default_mime_type
           'application/javascript'
+        end
+
+        def config
+          @config ||= Config.new
         end
       end
 
@@ -25,28 +32,31 @@ module Ember
           template = mustache_to_handlebars(scope, data)
         end
 
-        if configuration.precompile
+        if config.precompile
           if raw
             template = precompile_handlebars(template)
           else
-            template = precompile_ember_handlebars(template, configuration.ember_template)
+            template = precompile_ember_handlebars(template, config.ember_template)
           end
         else
           if raw
             template = compile_handlebars(data)
           else
-            template = compile_ember_handlebars(template, configuration.ember_template)
+            template = compile_ember_handlebars(template, config.ember_template)
           end
         end
 
-        if configuration.output_type == :amd
+        case config.output_type
+        when :amd
           target = amd_template_target(scope)
 
           "define('#{target}', ['exports'], function(__exports__){ __exports__['default'] = #{template} });"
-        else
+        when :global
           target = global_template_target(scope)
 
           "#{target} = #{template}\n"
+        else
+          raise "Unsupported `output_type`: #{config.output_type}"
         end
       end
 
@@ -57,7 +67,7 @@ module Ember
       end
 
       def amd_template_target(scope)
-        [configuration.amd_namespace, scope.logical_path.split(".").first].compact.join('/')
+        [config.amd_namespace, scope.logical_path.split(".").first].compact.join('/')
       end
 
       def global_template_target(scope)
@@ -89,7 +99,7 @@ module Ember
       end
 
       def template_path(path)
-        root = configuration.templates_root
+        root = config.templates_root
 
         if root.kind_of? Array
           root.each do |root|
@@ -103,11 +113,11 @@ module Ember
 
         path = path.split('/')
 
-        path.join(configuration.templates_path_separator)
+        path.join(config.templates_path_separator)
       end
 
-      def configuration
-        self.class.configuration
+      def config
+        self.class.config
       end
 
       def indent(string)
