@@ -5,7 +5,7 @@ class TestEmberHandlebarsTemplate < Minitest::Test
     @env = Sprockets::Environment.new
     @env.append_path File.expand_path('../fixtures', __FILE__)
 
-    @env.register_engine '.hbs', Ember::Handlebars::Template
+    Ember::Handlebars::Template.setup @env
   end
 
   def test_that_it_has_a_version_number
