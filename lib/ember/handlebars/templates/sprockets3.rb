@@ -32,10 +32,6 @@ module Ember
       end
 
       def call(input)
-        input[:cache].fetch(cache_key + [input[:data]]) { _call(input) }
-      end
-
-      def _call(input)
         data = input[:data]
         filename = input[:filename]
 
@@ -51,7 +47,7 @@ module Ember
           if raw
             template = precompile_handlebars(template)
           else
-            template = precompile_ember_handlebars(template, config.ember_template)
+            template = precompile_ember_handlebars(template, config.ember_template, input)
           end
         else
           if raw
@@ -75,11 +71,36 @@ module Ember
         end
       end
 
+      private
+
+      def precompile_handlebars(template, input)
+        dependencies = [
+          Barber::Precompiler.compiler_version,
+          template,
+        ]
+
+        input[:cache].fetch(cache_key + dependencies) do
+          super(template)
+        end
+      end
+
+      def precompile_ember_handlebars(template, ember_template, input)
+        dependencies = [
+          Barber::Ember::Precompiler.compiler_version,
+          ember_template,
+          template
+        ]
+
+        input[:cache].fetch(cache_key + dependencies) do
+          super(template, ember_template)
+        end
+      end
+
       def cache_key
         [
           self.class.name,
           VERSION,
-          config.to_hash
+          Barber::VERSION
         ]
       end
     end
