@@ -1,6 +1,16 @@
 module Ember
   module Handlebars
     module Helper
+      def self.included(base)
+        base.extend ClassMethods
+      end
+
+      module ClassMethods
+        def setup_ember_template_compiler(path)
+          Barber::Ember::Precompiler.ember_template_compiler_path = path
+        end
+      end
+
       private
 
       def handlebars?(filename)
