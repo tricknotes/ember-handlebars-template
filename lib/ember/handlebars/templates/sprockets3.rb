@@ -79,7 +79,7 @@ module Ember
           template,
         ]
 
-        input[:cache].fetch(cache_key + dependencies) do
+        input[:cache].fetch(_cache_key + dependencies) do
           super(template)
         end
       end
@@ -91,12 +91,12 @@ module Ember
           template
         ]
 
-        input[:cache].fetch(cache_key + dependencies) do
+        input[:cache].fetch(_cache_key + dependencies) do
           super(template, ember_template)
         end
       end
 
-      def cache_key
+      def _cache_key
         [
           self.class.name,
           VERSION,
