@@ -14,6 +14,7 @@ module Ember
 
         def setup(env)
           env.register_engine '.hbs', self
+          env.register_engine '.handlebars', self
         end
 
         def config
