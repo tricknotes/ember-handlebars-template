@@ -64,6 +64,14 @@ class TestEmberHandlebarsTemplate < Minitest::Test
     end
   end
 
+  def test_should_compile_template_named_as_index
+    with_template_root('templates') do
+      asset = @env['templates/index.js']
+
+      assert_equal 'application/javascript', asset.content_type
+      assert_match %r{Ember.TEMPLATES\["index"\]}, asset.to_s
+    end
+  end
 
   def test_template_with_AMD_output_using_app_namespace
     with_amd_output('app') do

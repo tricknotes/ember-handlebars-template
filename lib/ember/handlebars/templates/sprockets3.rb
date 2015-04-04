@@ -58,13 +58,16 @@ module Ember
           end
         end
 
+        actual_name = input[:name]
+        actual_name += '/index' if input[:filename][input[:load_path] + '/' + input[:name] + '/index']
+
         case config.output_type
         when :amd
-          target = amd_template_target(config.amd_namespace, input[:name])
+          target = amd_template_target(config.amd_namespace, actual_name)
 
           "define('#{target}', ['exports'], function(__exports__){ __exports__['default'] = #{template} });"
         when :global
-          target = global_template_target(input[:name], config)
+          target = global_template_target(actual_name, config)
 
           "#{target} = #{template}\n"
         else
