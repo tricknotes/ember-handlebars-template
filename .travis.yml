@@ -9,4 +9,4 @@ env:
   matrix:
     - SPROCKETS_VERSION="~> 2.1.0"
     - SPROCKETS_VERSION="~> 2.12.0"
-    - SPROCKETS_VERSION="~> 3.0.0.beta.10"
+    - SPROCKETS_VERSION="~> 3.0.0"
