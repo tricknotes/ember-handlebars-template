@@ -37,8 +37,8 @@ module Ember
         root = config.templates_root
 
         if root.kind_of? Array
-          root.each do |root|
-            path.sub!(/#{Regexp.quote(root)}\//, '')
+          root.each do |r|
+            path.sub!(/#{Regexp.quote(r)}\//, '')
           end
         else
           unless root.empty?
