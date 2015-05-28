@@ -1,3 +1,5 @@
+require 'tilt'
+
 module Ember
   module Handlebars
     class Template < Tilt::Template

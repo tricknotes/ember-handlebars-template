@@ -8,10 +8,10 @@ module Ember
     autoload :Helper, 'ember/handlebars/helper'
 
     case Sprockets::VERSION
-    when /\A2\./
-      autoload :Template, 'ember/handlebars/templates/sprockets2'
-    when /\A3\./
-      autoload :Template, 'ember/handlebars/templates/sprockets3'
+    when /\A2\./, /\A3\.1/
+      autoload :Template, 'ember/handlebars/templates/sprockets+tilt'
+    when /\A3\.0/
+      autoload :Template, 'ember/handlebars/templates/sprockets_only'
     else
       raise "Unsupported sprockets version: #{Sprockets::VERSION}"
     end
