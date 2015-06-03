@@ -8,7 +8,7 @@ module Ember
     autoload :Helper, 'ember/handlebars/helper'
 
     case Sprockets::VERSION
-    when /\A2\./, /\A3\.1/
+    when /\A2\./, /\A3\.[12]/
       autoload :Template, 'ember/handlebars/templates/sprockets+tilt'
     when /\A3\.0/
       autoload :Template, 'ember/handlebars/templates/sprockets_only'
