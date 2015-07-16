@@ -64,6 +64,15 @@ class TestEmberHandlebarsTemplate < Minitest::Test
     end
   end
 
+  def test_should_not_handle_partial_maching_template
+    with_template_root('templates') do
+      asset = @env['templates_mobile/hi.js']
+
+      assert_equal 'application/javascript', asset.content_type
+      assert_match %r{Ember.TEMPLATES\["templates_mobile/hi"\]}, asset.to_s
+    end
+  end
+
   def test_should_compile_template_named_as_index
     with_template_root('templates') do
       asset = @env['templates/index.js']

@@ -36,13 +36,9 @@ module Ember
       def template_path(path, config)
         root = config.templates_root
 
-        if root.kind_of? Array
-          root.each do |r|
+        unless root.empty?
+          Array(root).each.each do |r|
             path.sub!(/#{Regexp.quote(r)}\//, '')
-          end
-        else
-          unless root.empty?
-            path.sub!(/#{Regexp.quote(root)}\/?/, '')
           end
         end
 
