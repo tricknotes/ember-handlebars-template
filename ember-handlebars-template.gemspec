@@ -20,7 +20,6 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'sprockets', '>= 3.3', '< 3.4'
   spec.add_dependency 'barber', '>= 0.9.0'
-  spec.add_dependency 'tilt'
 
   spec.add_development_dependency 'bundler', '~> 1.7'
   spec.add_development_dependency 'rake', '~> 10.0'
