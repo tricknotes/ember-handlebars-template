@@ -21,6 +21,7 @@ module Ember
 
         def setup(env)
           env.register_engine '.hbs', self, mime_type: 'application/javascript'
+          env.register_engine '.hjs', self, mime_type: 'application/javascript'
           env.register_engine '.handlebars', self, mime_type: 'application/javascript'
         end
 
