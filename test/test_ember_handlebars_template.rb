@@ -127,6 +127,20 @@ class TestEmberHandlebarsTemplate < Minitest::Test
     end
   end
 
+  def test_compile_template_with_hjs_extname
+    asset = @env['extname/hjs.js']
+
+    assert_equal 'application/javascript', asset.content_type
+    assert_match %r{Ember.TEMPLATES\["extname/hjs"\]}, asset.to_s
+  end
+
+  def test_compile_template_with_handlebars_extname
+    asset = @env['extname/handlebars.js']
+
+    assert_equal 'application/javascript', asset.content_type
+    assert_match %r{Ember.TEMPLATES\["extname/handlebars"\]}, asset.to_s
+  end
+
   private
 
   def config
