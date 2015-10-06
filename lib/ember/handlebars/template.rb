@@ -10,7 +10,7 @@ module Ember
     case Sprockets::VERSION
     when /\A2\./, /\A3\.[12]/
       autoload :Template, 'ember/handlebars/templates/sprockets+tilt'
-    when /\A3\.[03]/
+    when /\A3\.[034]/
       autoload :Template, 'ember/handlebars/templates/sprockets_only'
     else
       raise "Unsupported sprockets version: #{Sprockets::VERSION}"
