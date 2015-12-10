@@ -141,6 +141,10 @@ class TestEmberHandlebarsTemplate < Minitest::Test
     assert_match %r{Ember.TEMPLATES\["extname/handlebars"\]}, asset.to_s
   end
 
+  def test_should_respond_with_handlebars_detection
+    assert_equal Ember::Handlebars::Template.handlebars_available?, false, 'This optional feature should be `false` by default.'
+  end
+
   private
 
   def config

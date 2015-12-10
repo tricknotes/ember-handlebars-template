@@ -32,6 +32,10 @@ module Ember
         def call(input)
           instance.call(input)
         end
+
+        def handlebars_available?
+          Barber::Precompiler.handlebars_available?
+        end
       end
 
       attr_reader :config
