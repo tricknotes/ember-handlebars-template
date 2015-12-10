@@ -23,6 +23,10 @@ module Ember
         def config
           @config ||= Config.new
         end
+
+        def handlebars_available?
+          Barber::Precompiler.handlebars_available?
+        end
       end
 
       def prepare; end
