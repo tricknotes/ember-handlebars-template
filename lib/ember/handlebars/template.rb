@@ -60,13 +60,13 @@ module Ember
           if raw
             template = precompile_handlebars(template)
           else
-            template = precompile_ember_handlebars(template, config.ember_template, input)
+            template = precompile_ember_handlebars(template, config.ember_template, input, {moduleName: template_path(actual_name(input), config)})
           end
         else
           if raw
             template = compile_handlebars(data)
           else
-            template = compile_ember_handlebars(template, config.ember_template)
+            template = compile_ember_handlebars(template, config.ember_template, {moduleName: template_path(actual_name(input), config)})
           end
         end
 
@@ -97,7 +97,7 @@ module Ember
         end
       end
 
-      def precompile_ember_handlebars(template, ember_template, input)
+      def precompile_ember_handlebars(template, ember_template, input, options = nil)
         dependencies = [
           Barber::Ember::Precompiler.compiler_version,
           ember_template,
@@ -105,7 +105,7 @@ module Ember
         ]
 
         input[:cache].fetch(_cache_key + dependencies) do
-          super(template, ember_template)
+          super(template, ember_template, options)
         end
       end
 
