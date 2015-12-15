@@ -127,6 +127,24 @@ class TestEmberHandlebarsTemplate < Minitest::Test
     end
   end
 
+  def test_should_have_module_name_with_global_output
+    asset = @env['templates/hi.js']
+
+    assert_equal 'application/javascript', asset.content_type
+    assert_match %r{Ember.TEMPLATES\["hi"\]}, asset.to_s
+    assert_match %r{"moduleName": "hi"}, asset.to_s
+  end
+
+  def test_should_have_module_name_with_AMD_output
+    with_amd_output('app') do
+      asset = @env['templates/hi.js']
+
+      assert_equal 'application/javascript', asset.content_type
+      assert_match %r{define\('app/templates/hi'}, asset.to_s
+      assert_match %r{"moduleName": "app/templates/hi"}, asset.to_s
+    end
+  end
+
   def test_compile_template_with_hjs_extname
     asset = @env['extname/hjs.js']
 

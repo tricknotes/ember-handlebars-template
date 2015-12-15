@@ -38,7 +38,7 @@ module Ember
 
         unless root.empty?
           Array(root).each.each do |r|
-            path.sub!(/#{Regexp.quote(r)}\//, '')
+            path = path.sub(/#{Regexp.quote(r)}\//, '')
           end
         end
 

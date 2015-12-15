@@ -56,27 +56,39 @@ module Ember
           template = mustache_to_handlebars(filename, data)
         end
 
+        template_name = actual_name(input)
+
+        module_name =
+          case config.output_type
+          when :amd
+            amd_template_target(config.amd_namespace, template_name)
+          when :global
+            template_path(template_name, config)
+          else
+            raise "Unsupported `output_type`: #{config.output_type}"
+          end
+
+        meta = {moduleName: module_name}
+
         if config.precompile
           if raw
             template = precompile_handlebars(template)
           else
-            template = precompile_ember_handlebars(template, config.ember_template, input, {moduleName: template_path(actual_name(input), config)})
+            template = precompile_ember_handlebars(template, config.ember_template, input, meta)
           end
         else
           if raw
             template = compile_handlebars(data)
           else
-            template = compile_ember_handlebars(template, config.ember_template, {moduleName: template_path(actual_name(input), config)})
+            template = compile_ember_handlebars(template, config.ember_template, meta)
           end
         end
 
         case config.output_type
         when :amd
-          target = amd_template_target(config.amd_namespace, actual_name(input))
-
-          "define('#{target}', ['exports'], function(__exports__){ __exports__['default'] = #{template} });"
+          "define('#{module_name}', ['exports'], function(__exports__){ __exports__['default'] = #{template} });"
         when :global
-          target = global_template_target(actual_name(input), config)
+          target = global_template_target(template_name, config)
 
           "#{target} = #{template}\n"
         else
@@ -101,7 +113,8 @@ module Ember
         dependencies = [
           Barber::Ember::Precompiler.compiler_version,
           ember_template,
-          template
+          template,
+          options
         ]
 
         input[:cache].fetch(_cache_key + dependencies) do
