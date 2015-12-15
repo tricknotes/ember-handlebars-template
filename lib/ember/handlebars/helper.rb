@@ -55,12 +55,12 @@ module Ember
         "Handlebars.template(#{Barber::Precompiler.compile(string)});"
       end
 
-      def compile_ember_handlebars(string, ember_template = 'Handlebars')
-        "Ember.#{ember_template}.compile(#{indent(string).inspect});"
+      def compile_ember_handlebars(string, ember_template = 'Handlebars', options = nil)
+        "Ember.#{ember_template}.compile(#{indent(string).inspect}, #{options.to_json});"
       end
 
-      def precompile_ember_handlebars(string, ember_template = 'Handlebars')
-        "Ember.#{ember_template}.template(#{Barber::Ember::Precompiler.compile(string)});"
+      def precompile_ember_handlebars(string, ember_template = 'Handlebars', options = nil)
+        "Ember.#{ember_template}.template(#{Barber::Ember::Precompiler.compile(string, options)});"
       end
 
       def indent(string)
