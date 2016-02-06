@@ -72,7 +72,7 @@ module Ember
 
         if config.precompile
           if raw
-            template = precompile_handlebars(template)
+            template = precompile_handlebars(template, input)
           else
             template = precompile_ember_handlebars(template, config.ember_template, input, meta)
           end

@@ -64,7 +64,7 @@ class TestEmberHandlebarsTemplate < Minitest::Test
     end
   end
 
-  def test_should_not_handle_partial_maching_template
+  def test_should_not_handle_partial_matching_template
     with_template_root('templates') do
       asset = @env['templates_mobile/hi.js']
 
@@ -145,6 +145,15 @@ class TestEmberHandlebarsTemplate < Minitest::Test
     end
   end
 
+  def test_compile_raw_template
+    with_ember_template 'Handlebars' do
+      asset = @env['app/templates/hi.raw.js']
+
+      assert_equal 'application/javascript', asset.content_type
+      assert_match %r{Ember.TEMPLATES\["app/hi.raw"\] = Handlebars\.template\(}, asset.to_s
+    end
+  end
+
   def test_compile_template_with_hjs_extname
     asset = @env['extname/hjs.js']
 
@@ -160,7 +169,9 @@ class TestEmberHandlebarsTemplate < Minitest::Test
   end
 
   def test_should_respond_with_handlebars_detection
-    assert_equal Ember::Handlebars::Template.handlebars_available?, false, 'This optional feature should be `false` by default.'
+    assert_equal Ember::Handlebars::Template.handlebars_available?,
+                 true,
+                 'Handlebars should be available since it is a development dependency.'
   end
 
   private
