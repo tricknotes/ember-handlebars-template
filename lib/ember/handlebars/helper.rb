@@ -29,8 +29,8 @@ module Ember
         [namespace, module_name].compact.join('/')
       end
 
-      def global_template_target(module_name, config)
-        "Ember.TEMPLATES[#{template_path(module_name, config).inspect}]"
+      def global_template_target(namespace, module_name, config)
+        "#{namespace}[#{template_path(module_name, config).inspect}]"
       end
 
       def template_path(path, config)
@@ -43,6 +43,10 @@ module Ember
         end
 
         path = path.split('/')
+
+        # Strip the '.raw' suffix if there is one.
+        file_name = path[-1]
+        path[-1] = file_name[0..-5] if file_name.end_with?('.raw')
 
         path.join(config.templates_path_separator)
       end

@@ -88,7 +88,8 @@ module Ember
         when :amd
           "define('#{module_name}', ['exports'], function(__exports__){ __exports__['default'] = #{template} });"
         when :global
-          target = global_template_target(template_name, config)
+          namespace = raw ? config.raw_template_namespace : 'Ember.TEMPLATES'
+          target = global_template_target(namespace, template_name, config)
 
           "#{target} = #{template}\n"
         else
