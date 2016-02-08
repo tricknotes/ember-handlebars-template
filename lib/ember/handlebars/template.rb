@@ -20,9 +20,12 @@ module Ember
         end
 
         def setup(env)
-          env.register_engine '.hbs', self, mime_type: 'application/javascript'
-          env.register_engine '.hjs', self, mime_type: 'application/javascript'
-          env.register_engine '.handlebars', self, mime_type: 'application/javascript'
+          %w(.raw.hbs .raw.hjs .raw.handlebars
+             .hbs .hjs .handlebars).each do |extension|
+            env.register_engine extension,
+                                self,
+                                mime_type: 'application/javascript'
+          end
         end
 
         def instance
@@ -72,7 +75,7 @@ module Ember
 
         if config.precompile
           if raw
-            template = precompile_handlebars(template)
+            template = precompile_handlebars(template, input)
           else
             template = precompile_ember_handlebars(template, config.ember_template, input, meta)
           end
@@ -88,7 +91,8 @@ module Ember
         when :amd
           "define('#{module_name}', ['exports'], function(__exports__){ __exports__['default'] = #{template} });"
         when :global
-          target = global_template_target(template_name, config)
+          namespace = raw ? config.raw_template_namespace : 'Ember.TEMPLATES'
+          target = global_template_target(namespace, template_name, config)
 
           "#{target} = #{template}\n"
         else

@@ -29,8 +29,8 @@ module Ember
         [namespace, module_name].compact.join('/')
       end
 
-      def global_template_target(module_name, config)
-        "Ember.TEMPLATES[#{template_path(module_name, config).inspect}]"
+      def global_template_target(namespace, module_name, config)
+        "#{namespace}[#{template_path(module_name, config).inspect}]"
       end
 
       def template_path(path, config)
@@ -42,9 +42,7 @@ module Ember
           end
         end
 
-        path = path.split('/')
-
-        path.join(config.templates_path_separator)
+        path.split('/').join(config.templates_path_separator)
       end
 
       def compile_handlebars(string)

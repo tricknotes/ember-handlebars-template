@@ -64,7 +64,7 @@ class TestEmberHandlebarsTemplate < Minitest::Test
     end
   end
 
-  def test_should_not_handle_partial_maching_template
+  def test_should_not_handle_partial_matching_template
     with_template_root('templates') do
       asset = @env['templates_mobile/hi.js']
 
@@ -145,6 +145,27 @@ class TestEmberHandlebarsTemplate < Minitest::Test
     end
   end
 
+  def test_compile_raw_template_and_strip_the_raw_suffix
+    with_ember_template 'Handlebars' do
+      asset = @env['app/templates/raw-hi']
+
+      assert_equal 'application/javascript', asset.content_type
+      assert_match %r{JST\["app/raw-hi"\] = Handlebars\.template\(}, asset.to_s
+    end
+  end
+
+  def test_configurable_raw_template_namespace
+    with_ember_template 'Handlebars' do
+      with_raw_template_namespace 'JS_TEMP' do
+        asset = @env['app/templates/raw-hi']
+
+        assert_equal 'application/javascript', asset.content_type
+        assert_match %r{JS_TEMP\["app/raw-hi"\] = Handlebars\.template\(},
+                     asset.to_s
+      end
+    end
+  end
+
   def test_compile_template_with_hjs_extname
     asset = @env['extname/hjs.js']
 
@@ -160,7 +181,9 @@ class TestEmberHandlebarsTemplate < Minitest::Test
   end
 
   def test_should_respond_with_handlebars_detection
-    assert_equal Ember::Handlebars::Template.handlebars_available?, false, 'This optional feature should be `false` by default.'
+    assert_equal Ember::Handlebars::Template.handlebars_available?,
+                 true,
+                 'Handlebars should be available since it is a development dependency.'
   end
 
   private
@@ -198,5 +221,13 @@ class TestEmberHandlebarsTemplate < Minitest::Test
     yield
   ensure
     config.ember_template = old
+  end
+
+  def with_raw_template_namespace(ns)
+    old, config.raw_template_namespace = config.raw_template_namespace, ns
+
+    yield
+  ensure
+    config.raw_template_namespace = old
   end
 end
