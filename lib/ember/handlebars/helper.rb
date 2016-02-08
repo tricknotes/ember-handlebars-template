@@ -42,13 +42,7 @@ module Ember
           end
         end
 
-        path = path.split('/')
-
-        # Strip the '.raw' suffix if there is one.
-        file_name = path[-1]
-        path[-1] = file_name[0..-5] if file_name.end_with?('.raw')
-
-        path.join(config.templates_path_separator)
+        path.split('/').join(config.templates_path_separator)
       end
 
       def compile_handlebars(string)
