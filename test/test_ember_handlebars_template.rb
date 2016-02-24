@@ -147,7 +147,7 @@ class TestEmberHandlebarsTemplate < Minitest::Test
 
   def test_compile_raw_template_and_strip_the_raw_suffix
     with_ember_template 'Handlebars' do
-      asset = @env['app/templates/raw-hi']
+      asset = @env['app/templates/raw-hi.js']
 
       assert_equal 'application/javascript', asset.content_type
       assert_match %r{JST\["app/raw-hi"\] = Handlebars\.template\(}, asset.to_s
@@ -157,7 +157,7 @@ class TestEmberHandlebarsTemplate < Minitest::Test
   def test_configurable_raw_template_namespace
     with_ember_template 'Handlebars' do
       with_raw_template_namespace 'JS_TEMP' do
-        asset = @env['app/templates/raw-hi']
+        asset = @env['app/templates/raw-hi.js']
 
         assert_equal 'application/javascript', asset.content_type
         assert_match %r{JS_TEMP\["app/raw-hi"\] = Handlebars\.template\(},
