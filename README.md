@@ -25,7 +25,12 @@ $ gem install ember-handlebars-template
 ## Usage
 
 ``` ruby
+# Sprockets 2.x way
 Sprockets.register_engine '.hbs', Ember::Handlebars::Template # or other extension which you like.
+
+# Sprockets 3.x/4.x way
+Sprockets.register_mime_type 'text/x-handlebars', extensions: ['.hbs'] # or other extension which you like.
+Sprockets.register_transformer 'text/x-handlebars', 'application/javascript', Ember::Handlebars::Template
 ```
 
 It can also compile "raw" templates – pure Handlebars templates, independent of Ember. They need to have a suffix `.raw.hbs` (the last extension depends on what was registered with `register_engine`).
