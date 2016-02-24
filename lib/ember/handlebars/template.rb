@@ -20,12 +20,11 @@ module Ember
         end
 
         def setup(env)
-          %w(.raw.hbs .raw.hjs .raw.handlebars
-             .hbs .hjs .handlebars).each do |extension|
-            env.register_engine extension,
-                                self,
-                                mime_type: 'application/javascript'
-          end
+          env.register_mime_type 'text/x-handlebars', extensions: %w(.raw.hbs .raw.hjs .raw.handlebars)
+          env.register_transformer 'text/x-handlebars', 'application/javascript', self
+
+          env.register_mime_type 'text/x-ember-handlebars', extensions: %w(.hbs .hjs .handlebars)
+          env.register_transformer 'text/x-ember-handlebars', 'application/javascript', self
         end
 
         def instance
