@@ -165,6 +165,15 @@ class TestEmberHandlebarsTemplate < Minitest::Test
     end
   end
 
+  def test_compile_mustache_template
+    with_ember_template 'Handlebars' do
+      asset = @env['types/mustache-hi.js']
+
+      assert_equal 'application/javascript', asset.content_type
+      assert_match %r{Ember.TEMPLATES\["types/mustache-hi"\] = Ember\.Handlebars\.template\(}, asset.to_s
+    end
+  end
+
   def test_compile_template_with_hjs_extname
     asset = @env['extname/hjs.js']
 
