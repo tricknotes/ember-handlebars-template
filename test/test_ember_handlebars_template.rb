@@ -145,7 +145,7 @@ class TestEmberHandlebarsTemplate < Minitest::Test
     end
   end
 
-  def test_compile_raw_template_and_strip_the_raw_suffix
+  def test_compile_raw_template
     with_ember_template 'Handlebars' do
       asset = @env['types/raw-hi.js']
 
@@ -154,7 +154,7 @@ class TestEmberHandlebarsTemplate < Minitest::Test
     end
   end
 
-  def test_configurable_raw_template_namespace
+  def test_configurable_raw_template_with_namespace
     with_ember_template 'Handlebars' do
       with_raw_template_namespace 'JS_TEMP' do
         asset = @env['types/raw-hi.js']
