@@ -15,6 +15,10 @@ module Ember
         end
 
         def setup(env)
+          env.register_engine '.mustache.hbs', self
+          env.register_engine '.mustache.hjs', self
+          env.register_engine '.mustache.handlebars', self
+
           env.register_engine '.hbs', self
           env.register_engine '.hjs', self
           env.register_engine '.handlebars', self
