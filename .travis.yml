@@ -4,6 +4,7 @@ cache: bundler
 rvm:
   - 2.1
   - 2.2
+  - 2.3.0
 env:
   matrix:
     - SPROCKETS_VERSION="~> 2.1.0"
