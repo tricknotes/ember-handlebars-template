@@ -67,7 +67,7 @@ module Ember
           template = mustache_to_handlebars(filename, data)
         end
 
-        template_name = actual_name(input)
+        template_name = input[:name]
 
         module_name =
           case config.output_type
@@ -140,20 +140,6 @@ module Ember
           VERSION,
           Barber::VERSION
         ]
-      end
-
-      def actual_name(input)
-        actual_name = input[:name]
-
-        if input[:filename][File.expand_path(input[:name] + '/index', input[:load_path])]
-          if actual_name == '.'
-            actual_name = 'index'
-          else
-            actual_name += '/index'
-          end
-        end
-
-        actual_name
       end
     end
   end
