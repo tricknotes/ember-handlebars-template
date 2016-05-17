@@ -1,13 +1,12 @@
 require 'sprockets'
 require 'barber'
 
+require 'ember/handlebars/version'
+require 'ember/handlebars/config'
+
 module Ember
   module Handlebars
-    autoload :VERSION, 'ember/handlebars/version'
-    autoload :Config, 'ember/handlebars/config'
-
     class Template
-
       class << self
         def configure
           yield config
