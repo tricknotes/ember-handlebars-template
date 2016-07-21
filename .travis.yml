@@ -11,4 +11,5 @@ env:
     - SPROCKETS_VERSION="~> 3.4.0"
     - SPROCKETS_VERSION="~> 3.5.0"
     - SPROCKETS_VERSION="~> 3.6.0"
+    - SPROCKETS_VERSION="~> 3.7.0"
     - SPROCKETS_VERSION="~> 4.0.0.beta2"
