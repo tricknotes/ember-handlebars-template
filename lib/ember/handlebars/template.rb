@@ -80,7 +80,7 @@ module Ember
             raise "Unsupported `output_type`: #{config.output_type}"
           end
 
-        meta = {moduleName: module_name}
+        meta = meta_supported? ? {moduleName: module_name} : false
 
         if config.precompile
           if raw
@@ -185,6 +185,10 @@ module Ember
           VERSION,
           Barber::VERSION
         ]
+      end
+
+      def meta_supported?
+        Gem::Version.new(Ember::VERSION) >= Gem::Version.new('2.7.0')
       end
     end
   end
