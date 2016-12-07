@@ -132,7 +132,7 @@ class TestEmberHandlebarsTemplate < Minitest::Test
 
     assert_equal 'application/javascript', asset.content_type
     assert_match %r{Ember.TEMPLATES\["hi"\]}, asset.to_s
-    assert_match %r{"moduleName": *"hi"}, asset.to_s
+    assert_match %r{"moduleName": *"hi"}, asset.to_s if meta_supported?
   end
 
   def test_should_have_module_name_with_AMD_output
@@ -141,7 +141,7 @@ class TestEmberHandlebarsTemplate < Minitest::Test
 
       assert_equal 'application/javascript', asset.content_type
       assert_match %r{define\('app/templates/hi'}, asset.to_s
-      assert_match %r{"moduleName": *"app/templates/hi"}, asset.to_s
+      assert_match %r{"moduleName": *"app/templates/hi"}, asset.to_s if meta_supported?
     end
   end
 
@@ -246,5 +246,9 @@ class TestEmberHandlebarsTemplate < Minitest::Test
     yield
   ensure
     config.raw_template_namespace = old
+  end
+
+  def meta_supported?
+    Gem::Version.new(Ember::VERSION) >= Gem::Version.new('2.7.0')
   end
 end
