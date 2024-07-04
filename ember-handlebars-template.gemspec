@@ -18,10 +18,10 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'sprockets', '>= 3.3', '< 4.1'
+  spec.add_dependency 'sprockets', '>= 3.7', '< 4.3'
   spec.add_dependency 'barber', '>= 0.11.0'
 
-  spec.add_development_dependency 'bundler', '>= 1.7', '< 2.3'
+  spec.add_development_dependency 'bundler', '>= 1.7', '< 3.0'
   spec.add_development_dependency 'rake', '>= 10.0', '< 14.0'
   spec.add_development_dependency 'handlebars-source'
   spec.add_development_dependency 'minitest'
