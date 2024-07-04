@@ -16,7 +16,9 @@ jobs:
         dependency-version:
           - SPROCKETS_VERSION: "~> 3.3.0"
           - SPROCKETS_VERSION: "~> 3.7.0"
-          - SPROCKETS_VERSION: "~> 4.0.0.beta4"
+          - SPROCKETS_VERSION: "~> 4.0.0"
+          - SPROCKETS_VERSION: "~> 4.1.0"
+          - SPROCKETS_VERSION: "~> 4.2.0"
           - EMBER_SOURCE_VERSION: "~> 1.13"
           - EMBER_SOURCE_VERSION: "~> 2.6"
           - EMBER_SOURCE_VERSION: "~> 2.10"
